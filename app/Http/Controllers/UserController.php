@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\PasswordRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -26,15 +28,26 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
+        // dd($request);
         $id=Auth::user()->id;
         $userData=User::find($id);
         
         $userData->name=$request->name;
         $userData->email=$request->email;
-      
+
+        if($request->file('avatar'))
+        {
+            $file=$request->file('avatar');
+            // dd($file);
+            $file_name=Storage::put('/public',$file);
+            // dd($file_name);
+            $url=Storage::url($file_name);
+            // dd($url);
+            $userData->avatar=$url;
+        }
         $userData->save();
         // dd($userData);
-        session()->flash('message','Profile was edited successfully');
+        session()->flash('message','Profile has been edited successfully');
         return redirect()->route('profile');
         
     }
@@ -50,11 +63,12 @@ class UserController extends Controller
         $id=Auth::user()->id;
         $userData=User::find($id);        
         $validation = $request->validated();
+        
         if(Hash::check($request->oldpassword,$request->newpassword))
         {
             $userData->password=bcrypt($request->newpassword);
             $userData->save();
-             // dd($userData);
+            // dd($userData);
             session()->flash('message','Password has already change');
             return redirect()->route('profile');
         }
@@ -62,5 +76,17 @@ class UserController extends Controller
         {
             return back()->with('error','Old Password doesnot match');
         }      
+    }
+    public function logoutPage(Request $request): RedirectResponse
+    {
+        dd($request);
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

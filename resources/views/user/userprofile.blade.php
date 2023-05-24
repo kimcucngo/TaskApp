@@ -4,8 +4,8 @@
         <br /><br />
         <center>
             <img
-                class="rounded-circle avatar-xl"
-                src=""
+                class="img-profile rounded-circle"
+                src="{{!empty($userData->avatar) ? url($userData->avatar) : url('upload/no_image.jpg') }}"
                 alt="Card image cap"/>
         </center>
 

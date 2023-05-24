@@ -7,9 +7,9 @@
   @if(session('message'))
   <div class="alert alert-danger">{{session('message')}}</div>
   @endIf
-  <form class="user" method="POST" action="{{route('password.update')}}">
+  <form class="user" method="POST" action="{{ route('password.update') }}" enctype="multipart/form-data">
+    @method(PUT)
     @csrf
-    method(PUT)
     <div class="form-group">
       <label
       for="example-text-input"
@@ -47,9 +47,9 @@
       placeholder="Confirm New Password">
     </div>
     <div class="form-group text-center row mt-3 pt-1">
-      <button class="btn btn-primary btn-user btn-block" type="submit">Change Password</button>
+      <button 
+      class="btn btn-primary btn-user btn-block" 
+      type="submit">Change Password</button>
     </div>
   </form>
-  </div>
-
 @endsection   
