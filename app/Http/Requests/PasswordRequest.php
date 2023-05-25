@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Rules\PasswordRule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,10 +22,15 @@ class PasswordRequest extends FormRequest
      */
     public function rules(): array
     {
+        // return [
+        //     'oldpassword' => 'required|min:6|max:255',
+        //     'newpassword' => ['required',new PasswordRule(),'min:6','max:255'],
+        //     'confirmpassword' => ['required',new PasswordRule(),'min:6','max:64','same:newpassword'],
+        // ];
         return [
             'oldpassword' => 'required|min:6|max:255',
-            'newpassword' => ['required',new PasswordRule(),'min:6','max:255'],
-            'confirmpassword' => ['required',new PasswordRule(),'min:6','max:64','same:newpassword'],
+            'newpassword' => ['required','min:6','max:255'],
+            'confirmpassword' => ['required','min:6','max:64','same:newpassword'],
         ];
     }
 }

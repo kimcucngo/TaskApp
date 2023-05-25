@@ -7,8 +7,7 @@
   @if(session('message'))
   <div class="alert alert-danger">{{session('message')}}</div>
   @endIf
-  <form class="user" method="POST" action="{{ route('password.update') }}" enctype="multipart/form-data">
-    @method(PUT)
+  <form class="user" method="POST" action="{{ route('password.update1') }}" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label

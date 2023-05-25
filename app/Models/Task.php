@@ -19,19 +19,13 @@ class Task extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'task_name',
+        'content',
+        'start_date',
+        'end_date',
+        'status',
+        'priority',
+        'content',
     ];
 
     /**
@@ -40,8 +34,10 @@ class Task extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'start_date'=> 'date',
+        'end_date' => 'date',
+        'status' => 'integer',
+        'priority' => 'integer',
     ];
     public function user()
     {

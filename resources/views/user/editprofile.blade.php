@@ -35,18 +35,33 @@
       value="{{ $userData->email }}"
       placeholder="Email">
     </div>
-    <div class="form-group">
+    {{-- <div class="frow mb-3">
       <label
       for="example-text-input"
       class="col-sm-2 col-form-label"
       >Profile Images</label>
       <input
       name="avatar"
-      class="form-control"
+      class="rounded avatar-lg"
       type="file"
-      id="avatar"
-      />
-    </div>
+      id="avatar">
+    </div> --}}
+
+    <div class="row mb-3">
+      <label for="example-text-input" class="col-sm-2 col-form-label">Profile Image </label>
+      <div class="col-sm-10">
+          <input name="profile_image" class="form-control" type="file" id="image">
+      </div>
+  </div>
+  <div class="row mb-3">
+      <label for="example-text-input" class="col-sm-2 col-form-label"> </label>
+      <div class="col-sm-10">
+          <img id="showImage" class="rounded avatar-lg"
+              {{-- src="{{ !empty($user->profile_image) ? url($user->profile_image) : url('upload/no_image.jpg') }}" --}}
+              alt="Card image cap">
+      </div>
+  </div>
+    
     <div class="form-group text-center row mt-3 pt-1">
       <button class="btn btn-primary btn-user btn-block" type="submit">Edit Profile</button>
     </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +34,17 @@ Route::controller(UserController::class)->middleware(['auth','verified'])->group
     Route::get('/profile/edit','edit')->name('profile.edit');
     Route::post('/profile/update','update')->name('profile.update');
     Route::get('/password/edit','editPass')->name('password.edit');
-    Route::post('/password/update','updatePass')->name('password.update');
-    Route::post('/page/logout','logoutPage')->name('page.logout');
+    Route::post('/password/update1','updatePass')->name('password.update1');
+
+    Route::get('/page/logout','logoutPage')->name('page.logout');
 });
 require __DIR__.'/auth.php';
+
+Route::controller(TaskController::class)->middleware(['auth','verified'])->group(function () {
+    Route::get('/task','task')->name('task');
+    Route::post('/task/create','taskCreate')->name('task.create');
+    Route::get('/allTask','allTask')->name('task.all');
+    Route::get('/task/edit/{id}','taskEdit')->name('task.edit');
+    Route::post('/task/update/{id}','taskUpdate')->name('task.update');
+    Route::get('/task/destroy/{id}','taskDestroy')->name('task.destroy');
+});

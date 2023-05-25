@@ -55,19 +55,19 @@ class UserController extends Controller
     {
         $id=Auth::user()->id;
         $userData=User::find($id);
-        // dd($userData);
         return view('user.editpass');
     }
     public function updatePass(PasswordRequest $request)
     {
+        // dd($request);
         $id=Auth::user()->id;
         $userData=User::find($id);        
         $validation = $request->validated();
         
-        if(Hash::check($request->oldpassword,$request->newpassword))
+        if(Hash::check($userData->password,$request->oldpassword))
         {
             $userData->password=bcrypt($request->newpassword);
-            $userData->save();
+            // $userData->save();
             // dd($userData);
             session()->flash('message','Password has already change');
             return redirect()->route('profile');
@@ -79,7 +79,6 @@ class UserController extends Controller
     }
     public function logoutPage(Request $request): RedirectResponse
     {
-        dd($request);
 
         Auth::logout();
 
