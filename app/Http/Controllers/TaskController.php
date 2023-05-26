@@ -33,12 +33,18 @@ class TaskController extends Controller
 
         return view ('task.createTask');
     }
-    public function allTask()
+    public function allTask(Request $request)
     {
+        // dd($request);
         $id = Auth::user()->id;
         $user = User::find($id);
         // $tasksData = $user->tasks()->get();
-        $tasksData = $user->tasks()->paginate(5);
+        $tasksData = $user->tasks()
+        ->status($request->status)
+        ->priority($request->priority)
+        ->startDate($request->start_date)
+        ->endDate($request->end_date)
+        ->paginate(5);
 
         // dd($tasksData);
         return view ('task.allTask',compact('tasksData'));
